@@ -10,6 +10,16 @@
       class="bandera"
     />
     <h3>{{ pais.name?.common || (pais.name | json) }}</h3>
+    <p>
+      <strong>Oficial (EN): <br /></strong> {{ pais.name.official }}
+    </p>
+    <p>
+      <strong>Oficial (nativo):<br /></strong> {{ getNativeOfficialName(pais) }}
+    </p>
+    <p>
+      <strong>Idiomas:<br /></strong> {{ getLanguages(pais) }}
+    </p>
+
     <p>Capital: {{ pais.capital?.[0] || '—' }}</p>
     <p>Región: {{ pais.region || '—' }}</p>
     <p>Población: {{ pais.population | number }}</p>
