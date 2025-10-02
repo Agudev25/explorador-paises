@@ -1,0 +1,17 @@
+<!-- Loading / empty -->
+<div *ngIf="paises().length === 0" class="loading">Cargando países...</div>
+
+<!-- Lista -->
+<div class="paises-container" *ngIf="paises().length > 0">
+  <div *ngFor="let pais of paises()" class="pais-card">
+    <img
+      [src]="pais.flags?.png || pais.flags?.svg"
+      [alt]="pais.name?.common || 'Bandera'"
+      class="bandera"
+    />
+    <h3>{{ pais.name?.common || (pais.name | json) }}</h3>
+    <p>Capital: {{ pais.capital?.[0] || '—' }}</p>
+    <p>Región: {{ pais.region || '—' }}</p>
+    <p>Población: {{ pais.population | number }}</p>
+  </div>
+</div>

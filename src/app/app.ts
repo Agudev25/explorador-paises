@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { ListaPaisesComponent } from './componentes/listas-paises/lista-paises.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss'],
+  standalone: true,
+  imports: [ListaPaisesComponent] // <-- Importamos el componente standalone aquí
 })
-export class App {
-  protected readonly title = signal('explorador-paises');
+export class AppComponent {
+  title = 'explorador-paises';
 }
