@@ -1,27 +1,46 @@
-<!-- Loading / empty -->
-<div *ngIf="paises().length === 0" class="loading">Cargando países...</div>
+<div class="container-fluid px-2 px-md-5">
+  <div class="row">
+    <div *ngFor="let pais of paises()" class="col-12 col-md-4 mb-4">
+      <div class="card h-100 redondeo">
+        <div class="bandera-container redondeo">
+          <img
+            [src]="pais.flags?.png || pais.flags?.svg"
+            [alt]="pais.name?.common"
+            class="bandera"
+          />
+        </div>
 
-<!-- Lista -->
-<div class="paises-container" *ngIf="paises().length > 0">
-  <div *ngFor="let pais of paises()" class="pais-card">
-    <img
-      [src]="pais.flags?.png || pais.flags?.svg"
-      [alt]="pais.name?.common || 'Bandera'"
-      class="bandera"
-    />
-    <h3>{{ pais.name?.common || (pais.name | json) }}</h3>
-    <p>
-      <strong>Oficial (EN): <br /></strong> {{ pais.name.official }}
-    </p>
-    <p>
-      <strong>Oficial (nativo):<br /></strong> {{ getNativeOfficialName(pais) }}
-    </p>
-    <p>
-      <strong>Idiomas:<br /></strong> {{ getLanguages(pais) }}
-    </p>
-
-    <p>Capital: {{ pais.capital?.[0] || '—' }}</p>
-    <p>Región: {{ pais.region || '—' }}</p>
-    <p>Población: {{ pais.population | number }}</p>
+        <div class="card-body">
+          <h3 class="card-title text-center">{{ pais.name.common }}</h3>
+          <div class="row">
+            <div class="col-6 text-center">
+              <p>
+                <strong>Oficial (EN):</strong><br />
+                {{ pais.name.official }}
+              </p>
+              <p>
+                <strong>Oficial (nativo):</strong><br />
+                {{ getNativeOfficialName(pais) }}
+              </p>
+              <p><strong>Idiomas:</strong> <br />{{ getLanguages(pais) }}</p>
+            </div>
+            <div class="col-6 text-center">
+              <p>
+                <strong>Capital:</strong><br />
+                {{ pais.capital?.[0] || '—' }}
+              </p>
+              <p>
+                <strong>Región:</strong><br />
+                {{ pais.region || '—' }}
+              </p>
+              <p>
+                <strong>Población:</strong><br />
+                {{ pais.population | number }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

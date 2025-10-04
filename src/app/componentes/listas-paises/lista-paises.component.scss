@@ -1,22 +1,63 @@
-.paises-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+// 🎨 Variables personalizadas
+$color-primary: #e8ffc2;
+$color-secondary: #085da2;
+$color-light: #fc7361;
+
+
+
+
+// 🃏 Estilo de las tarjetas
+.card {
+    border: none;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
 }
 
-.pais-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 0.5rem;
-    text-align: center;
-    background: #f9f9f9;
+.card-title {
+    font-size: 2.2em;
+    font-weight: 800;
+    color: $color-secondary;
+    margin-bottom: 1rem;
+}
 
-    .bandera {
-        width: 100%;
-        max-height: 100px;
-        object-fit: contain;
-        border-radius: 4px;
-        margin-bottom: 0.5rem;
+
+// 🌍 Bandera
+.bandera-container {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $color-light;
+    border-radius: 12px;
+    padding: 0.5rem;
+}
+
+.bandera {
+    max-width: 90%;
+    max-height: 100%;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
     }
+}
+
+.card {
+    background: linear-gradient(135deg, #ebc7f0, #ec7ef4);
+    border-radius: 12px;
+}
+
+.redondeo {
+    border-radius: 12px;
 }

@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+// Variables globales
+$color-primary: #6c6400;
+$color-secondary: #085da2;
+$color-light: #8ea6f6;
+$color-dark: #2c3e50;
+$color-muted: #6c757d;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: $color-dark;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    color: $color-secondary;
+}
