@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { effect } from '@angular/core';
 
 export interface Pais {
-  languages: any;
   name: {
     common: string;
     official: string;
@@ -14,15 +13,17 @@ export interface Pais {
       };
     };
   };
-  capital: string[];
-  population: number;
+  capital?: string[];
+  population?: number;
+  region?: string;
   flags: {
-    png: string;
-    svg: string;
+    png?: string;
+    svg?: string;
     alt?: string;
   };
-  region: string;
+  languages?: { [key: string]: string };
 }
+
 
 
 
@@ -30,22 +31,21 @@ export interface Pais {
   providedIn: 'root'
 })
 export class PaisService {
-  // Signal que contendrá la lista de países
-  paises = signal<Pais[]>([]);
+  paises = signal<Pais[]>([]); // 👈 lista reactiva
 
   constructor(private http: HttpClient) {
     this.cargarPaises();
   }
-cargarPaises() {
-  this.http
-    .get<any[]>('https://restcountries.com/v3.1/all?fields=name,capital,population,region,flags,languages')
-    .subscribe({
-      next: (data) => {
-        console.log('Datos de la API:', data); // 👈 aquí logeamos
-        this.paises.set(data);
-      },
-      error: (err) => console.error('Error cargando países:', err)
-    });
-}
 
+  private cargarPaises() {
+    this.http
+      .get<Pais[]>('https://restcountries.com/v3.1/all?fields=name,capital,population,region,flags,languages')
+      .subscribe({
+        next: (data) => {
+          console.log('Datos de la API:', data);
+          this.paises.set(data); // 👈 guardamos en el signal
+        },
+        error: (err) => console.error('Error cargando países:', err)
+      });
+  }
 }

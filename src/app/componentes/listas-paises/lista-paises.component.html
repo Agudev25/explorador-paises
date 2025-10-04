@@ -1,42 +1,39 @@
 <div class="container-fluid px-2 px-md-5">
+  <!-- Filtro -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="🔎 Busca un país por nombre..."
+        [(ngModel)]="terminoBusqueda"
+      />
+    </div>
+  </div>
+
+  <!-- Lista de países -->
   <div class="row">
-    <div *ngFor="let pais of paises()" class="col-12 col-md-4 mb-4">
-      <div class="card h-100 redondeo">
-        <div class="bandera-container redondeo">
+    <div *ngFor="let pais of filtrarPaises()" class="col-12 col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="bandera-container">
           <img
             [src]="pais.flags?.png || pais.flags?.svg"
             [alt]="pais.name?.common"
             class="bandera"
           />
         </div>
-
         <div class="card-body">
           <h3 class="card-title text-center">{{ pais.name.common }}</h3>
           <div class="row">
             <div class="col-6 text-center">
-              <p>
-                <strong>Oficial (EN):</strong><br />
-                {{ pais.name.official }}
-              </p>
-              <p>
-                <strong>Oficial (nativo):</strong><br />
-                {{ getNativeOfficialName(pais) }}
-              </p>
-              <p><strong>Idiomas:</strong> <br />{{ getLanguages(pais) }}</p>
+              <p><strong>Oficial (EN):</strong><br />{{ pais.name.official }}</p>
+              <p><strong>Oficial (nativo):</strong><br />{{ getNativeOfficialName(pais) }}</p>
+              <p><strong>Idiomas:</strong><br />{{ getLanguages(pais) }}</p>
             </div>
             <div class="col-6 text-center">
-              <p>
-                <strong>Capital:</strong><br />
-                {{ pais.capital?.[0] || '—' }}
-              </p>
-              <p>
-                <strong>Región:</strong><br />
-                {{ pais.region || '—' }}
-              </p>
-              <p>
-                <strong>Población:</strong><br />
-                {{ pais.population | number }}
-              </p>
+              <p><strong>Capital:</strong><br />{{ pais.capital?.[0] || '—' }}</p>
+              <p><strong>Región:</strong><br />{{ pais.region || '—' }}</p>
+              <p><strong>Población:</strong><br />{{ pais.population | number }}</p>
             </div>
           </div>
         </div>
