@@ -1,13 +1,65 @@
 <div class="container-fluid px-2 px-md-5">
-  <!-- Filtro -->
+  <!-- Filtros -->
   <div class="row mb-4">
-    <div class="col-12">
+    <!-- Filtro por nombre -->
+    <div class="col-12 col-md-4 mb-2">
       <input
         type="text"
         class="form-control"
-        placeholder="🔎 Busca un país por nombre..."
+        placeholder="🔎 Buscar por nombre..."
         [(ngModel)]="terminoBusqueda"
       />
+    </div>
+
+    <!-- Filtro por capital -->
+    <div class="col-12 col-md-4 mb-2">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="🏙️ Filtrar por capital..."
+        [(ngModel)]="filtroCapital"
+      />
+    </div>
+
+    <!-- Filtro por región -->
+    <div class="col-12 col-md-4 mb-2">
+      <select class="form-select" [(ngModel)]="filtroRegion">
+        <option value="">🌍 Todas las regiones</option>
+        <option *ngFor="let region of regionesUnicas" [value]="region">
+          {{ region }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Filtro por población -->
+    <div class="col-12 col-md-6 mb-2">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="👥 Población mínima"
+        [(ngModel)]="poblacionMin"
+        min="0"
+      />
+    </div>
+
+    <div class="col-12 col-md-6 mb-2">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="👥 Población máxima"
+        [(ngModel)]="poblacionMax"
+        min="0"
+      />
+    </div>
+
+    <!-- Botón limpiar -->
+    <div class="col-12 text-center mb-2">
+      <button class="btn btn-outline-danger btn-sm" (click)="limpiarFiltros()">
+        🗑️ Limpiar filtros
+      </button>
+      <small class="text-warning d-block mt-1">
+        Mostrando {{ filtrarPaises().length }} de {{ paises().length }} países
+      </small>
     </div>
   </div>
 
@@ -17,8 +69,8 @@
       <div class="card h-100">
         <div class="bandera-container">
           <img
-            [src]="pais.flags?.png || pais.flags?.svg"
-            [alt]="pais.name?.common"
+            [src]="pais.flags.png || pais.flags.svg"
+            [alt]="pais.flags.alt || pais.name.common"
             class="bandera"
           />
         </div>

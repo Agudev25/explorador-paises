@@ -61,3 +61,25 @@ $color-light: #fc7361;
 .redondeo {
     border-radius: 12px;
 }
+
+// 🎛️ Estilos para los filtros
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+    &:focus {
+        border-color: $color-secondary;
+        box-shadow: 0 0 0 0.2rem rgba(8, 93, 162, 0.25);
+    }
+}
+
+.btn-outline-secondary {
+    border-radius: 8px;
+
+    &:hover {
+        background-color: $color-secondary;
+        border-color: $color-secondary;
+        color: white;
+    }
+}

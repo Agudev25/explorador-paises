@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { effect } from '@angular/core';
 
 export interface Pais {
   name: {
@@ -24,14 +23,11 @@ export interface Pais {
   languages?: { [key: string]: string };
 }
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class PaisService {
-  paises = signal<Pais[]>([]); // 👈 lista reactiva
+  paises = signal<Pais[]>([]);
 
   constructor(private http: HttpClient) {
     this.cargarPaises();
@@ -43,7 +39,7 @@ export class PaisService {
       .subscribe({
         next: (data) => {
           console.log('Datos de la API:', data);
-          this.paises.set(data); // 👈 guardamos en el signal
+          this.paises.set(data);
         },
         error: (err) => console.error('Error cargando países:', err)
       });
