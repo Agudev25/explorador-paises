@@ -83,3 +83,58 @@ $color-light: #fc7361;
         color: white;
     }
 }
+
+// 🎮 ESTILOS DEL JUEGO
+.modal-backdrop {
+    z-index: 1040;
+}
+
+.modal {
+    z-index: 1050;
+}
+
+.game-modal {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    .modal-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 16px 16px 0 0;
+
+        .puntuacion {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    }
+}
+
+.bandera-juego {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .bandera-img {
+        max-height: 100%;
+        max-width: 100%;
+        border-radius: 8px;
+        border: 2px solid #ddd;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.btn-opcion {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+// ... (tus estilos existentes aquí) ...

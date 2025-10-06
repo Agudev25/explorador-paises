@@ -17,11 +17,19 @@ export class ListaPaisesComponent {
   poblacionMin: number | null = null;
   poblacionMax: number | null = null;
 
-  // Lista de regiones únicas para el dropdown
+  // Estado del juego
+  juegoActivo: boolean = false;
+  paisSecreto: Pais | null = null;
+  opciones: string[] = [];
+  respuestaCorrecta: boolean = false;
+  respuestaSeleccionada: string | null = null;
+  juegoTerminado: boolean = false;
+  puntuacion: number = 0;
+  intentos: number = 0;
+
   regionesUnicas: string[] = [];
 
   constructor(private paisService: PaisService) {
-    // Cargar regiones únicas cuando el servicio tenga datos
     setTimeout(() => {
       this.regionesUnicas = this.obtenerRegionesUnicas();
     }, 1000);
@@ -38,10 +46,79 @@ export class ListaPaisesComponent {
     return [...new Set(regiones)].sort();
   }
 
+  // 🎮 MÉTODOS DEL JUEGO
+  iniciarJuego() {
+    this.juegoActivo = true;
+    this.juegoTerminado = false;
+    this.respuestaSeleccionada = null;
+    this.respuestaCorrecta = false;
+    this.generarPregunta();
+  }
+
+  generarPregunta() {
+    const paises = this.paises();
+    if (paises.length < 4) return;
+
+    // Seleccionar país secreto al azar
+    const indiceSecreto = Math.floor(Math.random() * paises.length);
+    this.paisSecreto = paises[indiceSecreto];
+
+    // Seleccionar 3 países incorrectos al azar
+    const opcionesIncorrectas: string[] = [];
+    while (opcionesIncorrectas.length < 3) {
+      const indiceAleatorio = Math.floor(Math.random() * paises.length);
+      const nombrePais = paises[indiceAleatorio].name.common;
+      if (nombrePais !== this.paisSecreto.name.common && 
+          !opcionesIncorrectas.includes(nombrePais)) {
+        opcionesIncorrectas.push(nombrePais);
+      }
+    }
+
+    // Combinar y mezclar opciones
+    this.opciones = [this.paisSecreto.name.common, ...opcionesIncorrectas];
+    this.opciones = this.mezclarArray(this.opciones);
+  }
+
+  mezclarArray(array: any[]): any[] {
+    const nuevoArray = [...array];
+    for (let i = nuevoArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [nuevoArray[i], nuevoArray[j]] = [nuevoArray[j], nuevoArray[i]];
+    }
+    return nuevoArray;
+  }
+
+  seleccionarRespuesta(opcion: string) {
+    if (this.juegoTerminado) return;
+    
+    this.respuestaSeleccionada = opcion;
+    this.respuestaCorrecta = opcion === this.paisSecreto?.name.common;
+    this.juegoTerminado = true;
+    
+    if (this.respuestaCorrecta) {
+      this.puntuacion++;
+    }
+    this.intentos++;
+  }
+
+  siguientePregunta() {
+    this.juegoTerminado = false;
+    this.respuestaSeleccionada = null;
+    this.generarPregunta();
+  }
+
+  terminarJuego() {
+    this.juegoActivo = false;
+    this.paisSecreto = null;
+    this.opciones = [];
+    this.respuestaSeleccionada = null;
+    this.juegoTerminado = false;
+  }
+
+  // 🔍 MÉTODOS DE FILTRADO (los que ya tenías)
   filtrarPaises(): Pais[] {
     let paisesFiltrados = this.paises();
 
-    // Filtro por nombre
     if (this.terminoBusqueda.trim()) {
       const termino = this.terminoBusqueda.toLowerCase();
       paisesFiltrados = paisesFiltrados.filter(p => 
@@ -50,7 +127,6 @@ export class ListaPaisesComponent {
       );
     }
 
-    // Filtro por capital
     if (this.filtroCapital.trim()) {
       const capital = this.filtroCapital.toLowerCase();
       paisesFiltrados = paisesFiltrados.filter(p => 
@@ -58,14 +134,12 @@ export class ListaPaisesComponent {
       );
     }
 
-    // Filtro por región
     if (this.filtroRegion) {
       paisesFiltrados = paisesFiltrados.filter(p => 
         p.region === this.filtroRegion
       );
     }
 
-    // Filtro por población
     if (this.poblacionMin !== null) {
       paisesFiltrados = paisesFiltrados.filter(p => 
         p.population && p.population >= this.poblacionMin!
